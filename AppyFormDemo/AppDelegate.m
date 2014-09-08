@@ -15,23 +15,14 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
     // Override point for customization after application launch.
+
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    
-    
-    UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    
     MainViewController *mainVC = [[MainViewController alloc] init];
-    mainVC.title = @"Home";
-    
-    FeedbackViewController *feedbackVC = [[FeedbackViewController alloc] init];
-    feedbackVC.title = @"Show Feedback";
-    
-    tabBarController.viewControllers = [NSArray arrayWithObjects: mainVC, feedbackVC, nil];
-    
-    self.window.rootViewController = tabBarController;
+    self.window.rootViewController = mainVC;
 
     return YES;
 }

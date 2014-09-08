@@ -12,13 +12,18 @@
 
 @end
 
-static NSString *const AppyFormURL = @"http://localhost:3000/form/9JjQldgLyk5R";
+static NSString *const AppyFormURL = @"http://www.appyform.com/form/6nkVZxALgpwo";
 
 @implementation FeedbackViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                                 target:self
+                                                                                 action:@selector(buttonCallback:forEvent:)];
+    self.navigationItem.leftBarButtonItem = closeButton;
     
     // Add a web view.
     self.webView=[[UIWebView alloc] init];
@@ -39,6 +44,11 @@ static NSString *const AppyFormURL = @"http://localhost:3000/form/9JjQldgLyk5R";
     [self addConstraints];
 }
 
+-(void)buttonCallback:(UIButton *)button forEvent:(UIEvent*)event {
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+
 - (void)addConstraints
 {
     NSArray *allConstraints = @[
@@ -57,7 +67,7 @@ static NSString *const AppyFormURL = @"http://localhost:3000/form/9JjQldgLyk5R";
                                                                 toItem: self.view
                                                              attribute: NSLayoutAttributeBottom
                                                             multiplier: 1.0
-                                                              constant: -40
+                                                              constant: 0 //-40
                                  ],
                                 [NSLayoutConstraint constraintWithItem: self.webView
                                                              attribute: NSLayoutAttributeLeft
@@ -94,6 +104,14 @@ static NSString *const AppyFormURL = @"http://localhost:3000/form/9JjQldgLyk5R";
                                  ]
                                 ];
     [self.view addConstraints: allConstraints];
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    [self.navigationController setNavigationBarHidden: NO];
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    [self.navigationController setNavigationBarHidden: YES];
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType

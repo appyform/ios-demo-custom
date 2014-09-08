@@ -8,6 +8,7 @@
 
 
 #import "MainViewController.h"
+#import "FeedbackViewController.h"
 
 @interface MainViewController ()
 
@@ -44,7 +45,7 @@
     textLabel.textColor = [UIColor whiteColor];
     textLabel.preferredMaxLayoutWidth = 270.0;
     textLabel.numberOfLines = 0;
-    textLabel.text = @"Hi there! This app demonstrates how you can display a feedback form by tapping on a UIButton or tab menu item.";
+    textLabel.text = @"This app demonstrates how a feedback form can be displayed from any view controller using presentViewController method.";
     [self.view addSubview: textLabel];
 
     UIButton *feedbackButton = [UIButton buttonWithType: UIButtonTypeSystem];
@@ -58,7 +59,6 @@
                        action:@selector(buttonCallback:forEvent:)
              forControlEvents:UIControlEventTouchUpInside
      ];
-
 
     NSArray *allConstraints = @[
                                 // Set title background to be on top.
@@ -147,11 +147,19 @@
                                  ]
                                 ];
     [self.view addConstraints: allConstraints];
-    
 }
 
 -(void)buttonCallback:(UIButton *)button forEvent:(UIEvent*)event {
-    NSLog(@"Event sent");
+
+    UIViewController *rootController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+
+    FeedbackViewController *feedbackVC = [[FeedbackViewController alloc] init];
+    feedbackVC.title = @"Feedback";
+
+    UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController: feedbackVC];
+    navVC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+
+    [rootController presentViewController:navVC animated:YES completion:NULL];
 }
 
 - (void)didReceiveMemoryWarning
